@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = {};
-const sequelize = new Sequelize('todolist', 'pura', 'pura090394',{
-    hostname: 'localhost',
+const sequelize = new Sequelize(process.env.DATABASE ? process.env.DATABASE : 'todolist', process.env.USERNAME ? process.env.USERNAME : 'root', process.env.PASSWORD ? process.env.PASSWORD : 'root',{
+    hostname: process.env.HOSTNAME ? process.env.HOSTNAME : 'localhost',
     dialect: 'mysql',
     logging: false
 });

@@ -3,6 +3,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var cors = require('cors');
+var dotenv = require('dotenv').config();
 
 var checkJwt = require('./modules/checkJWT');
 
