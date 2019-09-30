@@ -5,6 +5,8 @@ var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 var checkJwt = require('../modules/checkJWT');
 
+const secretkey = process.env.SECRETKEY ? process.env.SECRETKEY : 'SECRETKEY';
+
 router.post('/register', async(req, res)=>{
     try {
         req.body.password = await bcrypt.hash(req.body.password,8);
@@ -37,7 +39,7 @@ router.post('/login', async(req,res) => {
                 message: 'Wrong password'
             }
         }
-        const token = await jwt.sign({email: req.body.email, id: search.dataValues._id},'SECRETKEY');
+        const token = await jwt.sign({email: req.body.email, id: search.dataValues._id}, secretkey);
         await search.update({jwt: token});
         res.send({token: token});
     } catch (err) {

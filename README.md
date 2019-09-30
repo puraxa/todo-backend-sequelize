@@ -15,6 +15,7 @@ DATABASE=/database name/
 USERNAME=/username/
 PASSWORD=/password/
 HOSTNAME=/hostname/
+SECRETKEY=/secret key for jwt/
 ```
 and save.
 
