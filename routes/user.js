@@ -9,6 +9,13 @@ const secretkey = process.env.SECRETKEY ? process.env.SECRETKEY : 'SECRETKEY';
 
 router.post('/register', async(req, res)=>{
     try {
+        const search = await db.User.findOne({email: req.body.email});
+        if(search){
+            throw {
+                status: 400,
+                message: 'Email already in use'
+            }
+        }
         req.body.password = await bcrypt.hash(req.body.password,8);
         await db.User.create(req.body);
         res.send({message:"Succesfull registration"});
