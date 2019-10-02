@@ -6,78 +6,15 @@ var cors = require('cors');
 var dotenv = require('dotenv').config();
 
 var checkJwt = require('./modules/checkJWT');
-
 const database = require('./modules/database');
+const User = require('./models/user');
+const Todolist = require('./models/todolist');
+const Item = require('./models/item');
 
-// const Sequelize = require('sequelize');
+User.hasMany(Todolist);
+Todolist.hasMany(Item);
 
-// const sequelize = new Sequelize('todolist', 'pura', 'pura090394',{
-//     hostname: 'localhost',
-//     dialect: 'mysql'
-// });
-
-// sequelize.authenticate().then(() => console.log('connected')).catch(err => console.error(err));
-
-// const User = sequelize.define('user',{
-//     email:{
-//         type: Sequelize.STRING,
-//         allowNull: false
-//     },
-//     password: {
-//         type: Sequelize.STRING,
-//         allowNull: false
-//     },
-//     jwt: {
-//         type: Sequelize.STRING,
-//     }
-// },{
-//     timestamps: false,
-//     sequelize,
-//     underscored: true
-// });
-
-// const Todolist = sequelize.define('todolist',{
-//     date_created: {
-//         type: Sequelize.DATE,
-//         allowNull: false,
-//     },
-//     name_of_list: {
-//         type: Sequelize.DATE,
-//         allowNull: false
-//     }
-// },{
-//     timestamps: false,
-//     sequelize,
-//     underscored: true
-// });
-
-// const Item = sequelize.define('item', {
-//     dateCreated: {
-//         type: Sequelize.DATE,
-//         allowNull: false
-//     },
-//     dateCompleted: {
-//         type: Sequelize.DATE,
-//         allowNull: false
-//     },
-//     isCompleted: {
-//         type: Sequelize.BOOLEAN,
-//         allowNull: false
-//     },
-//     value: {
-//         type: Sequelize.STRING,
-//         allowNull: false
-//     }
-// },{
-//     timestamps: false,
-//     sequelize,
-//     underscored: true
-// });
-
-// User.hasMany(Todolist);
-// Todolist.hasMany(Item);
-
-// sequelize.sync();
+database.sync();
 
 const userPath = require('./routes/user');
 const todoPath = require('./routes/todo');

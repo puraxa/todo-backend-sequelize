@@ -1,12 +1,12 @@
 const jwt = require('jsonwebtoken');
-const db = require('./database');
+var User = require('../models/user');
 const secretkey = process.env.SECRETKEY ? process.env.SECRETKEY : 'SECRETKEY';
 
 
 const checkJwt = async(req, res, next) => {
     try {
         const payload = await jwt.verify(req.headers.authorization, secretkey);
-        const search = await db.User.findByPk(payload.id);
+        const search = await User.findByPk(payload.id);
         if(search.dataValues.jwt != req.headers.authorization){
             throw {
                 status: 401,

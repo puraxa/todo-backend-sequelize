@@ -1,8 +1,8 @@
-var db = require('./database');
+var Todolist = require('../models/todolist');
 
 const checkId = async(req, res, next) => {
     try {
-        const search = await db.Todolist.findByPk(req.params.id);
+        const search = await Todolist.findByPk(req.params.id);
         if(search.dataValues.userId !=  req.payload.id){
             throw {
                 status: 401,

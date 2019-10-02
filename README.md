@@ -11,11 +11,7 @@ PORT=3000 npm start
 Change 3000 with port you want to use.  
 You will need to create `.env` file on root. After creation enter following
 ```
-DATABASE=/database name/
-USERNAME=/username/
-PASSWORD=/password/
-HOSTNAME=/hostname/
-SECRETKEY=/secret key for jwt/
+DB={"host":"hostname","database":"database name","username":"username","password":"password"}
 ```
 and save.
 

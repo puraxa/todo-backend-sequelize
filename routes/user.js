@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var db = require('../modules/database');
+var User = require('../models/user');
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 var checkJwt = require('../modules/checkJWT');
@@ -9,7 +9,7 @@ const secretkey = process.env.SECRETKEY ? process.env.SECRETKEY : 'SECRETKEY';
 
 router.post('/register', async(req, res)=>{
     try {
-        const search = await db.User.findOne({email: req.body.email});
+        const search = await User.findOne({email: req.body.email});
         if(search){
             throw {
                 status: 400,
@@ -17,7 +17,7 @@ router.post('/register', async(req, res)=>{
             }
         }
         req.body.password = await bcrypt.hash(req.body.password,8);
-        await db.User.create(req.body);
+        await User.create(req.body);
         res.send({message:"Succesfull registration"});
     } catch (err) {
         res.status(400).send({message:err.message});
@@ -32,7 +32,7 @@ router.post('/login', async(req,res) => {
                 message: 'Bad request'
             }
         }
-        const search = await db.User.findOne({where: {email: req.body.email}});
+        const search = await User.findOne({where: {email: req.body.email}});
         if(!search){
             throw {
                 status: 401,
@@ -62,7 +62,7 @@ router.get('/check-auth', (req,res)=>{
 
 router.get('/logout', async(req, res)=> {
     try {
-        const search = await db.User.findByPk(req.payload.id);
+        const search = await User.findByPk(req.payload.id);
         await search.update({jwt: null});
         res.send();
     } catch (err) {
